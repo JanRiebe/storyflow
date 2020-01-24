@@ -75,32 +75,9 @@ function isUpperCase(str) {
 }
 
 
-function add_div()
+
+function setElementStyle(oldElement)
 {
-    var newElement = document.createElement('div');
-    newElement.id = "line "+(lines.length);
-    lines[lines.length] = newElement.id
-    newElement.className = "text";
-    newElement.contentEditable = true;
-    newElement.onblur = setElementStyle;
-    //newElement.innerText = newElement.id;
-    //TODO insert at the position below the active element instead of at the bottom.
-    document.getElementById("page").appendChild(newElement);
-
-    // Deactivating linebreaks within the element.
-    newElement.addEventListener('keypress', (evt) => {
-        if (evt.which === 13) {
-            evt.preventDefault();
-        }
-    });
-
-    focusEndOfElement(newElement);
-}
-
-function setElementStyle(e)
-{
-    //alert(isUpperCase(document.getElementById(lines[lines.length - 3]).innerText));
-    var oldElement = e.target;
     //var twoElementsUp = document.getElementById(lines[lines.length - 2]);
     oldElement.align = (isUpperCase(oldElement.innerText)) ? 'center' : 'left';
     if(isUpperCase(oldElement.innerText))
@@ -112,6 +89,44 @@ function setElementStyle(e)
     if(oldElement.innerHTML.length == 0)
         oldElement.innerHTML = "<br>";
 }
+
+
+function setElementStyleOnBlur(e)
+{
+    setElementStyle(e.target);
+}
+
+
+function add_div(text="")
+{
+    var newElement = document.createElement('div');
+    newElement.id = "line "+(lines.length);
+    lines[lines.length] = newElement.id;
+    newElement.className = "text";
+    newElement.contentEditable = true;
+    newElement.onblur = setElementStyleOnBlur;
+    
+    //setElementStyle(newElement);
+    //TODO insert at the position below the active element instead of at the bottom.
+    document.getElementById("page").appendChild(newElement);
+    
+    // Deactivating linebreaks within the element.
+    newElement.addEventListener('keypress', (evt) => {
+        if (evt.which === 13) {
+            evt.preventDefault();
+        }
+    });
+    
+    if(text != "")
+    {
+        newElement.innerText = text;
+        setElementStyle(newElement);
+        focusEndOfElement(newElement);
+    }
+    else
+        newElement.focus();
+}
+
 
 function focusEndOfElement(div)
 {
@@ -184,7 +199,35 @@ function keydownHandler(e) {
   return true;
 }
 
+function displayFile(evt)
+{
 
+    //Retrieve the first (and only!) File from the FileList object
+    var f = evt.target.files[0]; 
+    
+    if (f) {
+        var r = new FileReader();
+        r.onload = function(e) { 
+        
+            var contents = e.target.result;
+            var file_lines = contents.split('\n');
+            for(var i = 0; i < file_lines.length; i++){
+                if(i != "")
+                    add_div(file_lines[i]);
+            //alert(lines[line]);
+            }
+        
+        }        
+        r.readAsText(f);
+    }
+    else { 
+        alert("Failed to load file");
+    }
+}
+
+window.onload = function(){
+ document.getElementById('fileinput').addEventListener('change', displayFile, false);
+};
 
 //Register the keydown event handler:
 document.onkeydown=keydownHandler;
@@ -192,6 +235,7 @@ document.onkeydown=keydownHandler;
 
 </script>
 
+<input type="file" id="fileinput" />
 <a id="saveButton" target="iframe" download="note.txt" href="#" onclick="save();">Save</a>
 <iframe id="iframe"></iframe>
 <div contenteditable id="title">Unnamed document</div>
