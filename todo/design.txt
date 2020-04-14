@@ -1,0 +1,74 @@
+Multiple visualisations of beats.
+    Beat sheet by scenes.
+    Scene headers by act/sequence. Scenes are like beats in the beat sheet by scene.
+    Beats by story line.
+    Dramatic question overview.
+    
+Toggle meta data on and off.
+    left side
+        Abbreviation for special points, like PP, MP, DSP. (Can be configured per project.)
+        Color bars for story line.
+    right side
+        Open dramatic questions.
+        Add/answer/remove dramatic question.
+        
+
+Possible actions
+    Add beat
+    Remove beat
+    Edit beat text
+    Change beat order
+    View beats
+    View higher level structure by viewing scenes
+        add scenes
+        add scene headers
+        Change which scene a beat belongs to
+        Change which act a scene belongs to
+        Define which beat is a midpoint
+    View the structure of the story by viewing dramatic questions
+        add dramatic questions
+        define the role of a beat in a dramatic question
+    Quickly see which dramatic questions are unanswered
+    Quickly see which beats don't have a dramatic question
+    View beats ordered by storyline
+        Edit which storyline a beat belongs to
+    save a project
+    load a project
+        
+        
+Saving and loading
+    project file is one big json
+    gets saved locally
+    settings are saved in the project
+    user gets to decide where to save and load
+    automatic saving on edit
+    backup on opening project file
+        
+        
+Data structure
+    beats
+        text
+        id
+    scene
+        header
+        id
+        list of beat ids
+        list of beats with special roles, like midpoint
+    act
+        header
+        id
+        list of scene ids
+        list of beats with special roles, like midpoint
+    story
+        list of act ids
+    story line
+        list of beat ids
+    character
+        header
+        list of beat ids
+    dramatic question
+        header
+        list of beats with special roles, like midpoint
+        
+    Everything is a node with id, text and children, where children can be named or unnamed.
+    

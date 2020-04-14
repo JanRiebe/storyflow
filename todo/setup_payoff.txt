@@ -1,0 +1,9 @@
+Setup and payoff
+
+
+Like dramatic questions, setup and payoff hold IDs for beats and assign them roles.
+
+Roles can be:
+* Setup
+* Reminder
+* Payoff

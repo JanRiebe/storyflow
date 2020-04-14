@@ -1,0 +1,25 @@
+{
+  "name": "storyflow",
+  "homepage": "https://github.com/JanRiebe/storyflow",
+  "authors": [
+    "Jan Riebe <corone.et.monedula@gmail.com>"
+  ],
+  "description": "A tool for writing beat sheets and keeping track of the flow of your story.",
+  "main": "index.html",
+  "keywords": [
+    "writing",
+    "story",
+    "beat",
+    "beat",
+    "sheet"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

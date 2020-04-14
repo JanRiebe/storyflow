@@ -1,0 +1,16 @@
+How to structure dramatic questions?
+
+Give beats an ID.
+
+A dramatic question connects beat IDs with roles.
+These roles are:
+* Question
+* Reminder
+* Thesis
+* Antithesis
+* Synthesis
+
+A dramatic question can also hold subquestions.
+If a beat has neither of the above roles, it is probably either not dramatic or belongs to a subquestion.
+
+There can be multile reminders. However a reminder is a sign that the question is either not important, that there is too much going on or that the story is not dramatic.

@@ -1,0 +1,24 @@
+
+
+Save beats to json file.
+
+
+Load, save and display sequences from file.
+
+Stretch goal: Load file from google drive
+https://developers.google.com/drive/api/v3/quickstart/js
+https://developers.google.com/drive/api/v3/manage-downloads#downloading_a_file
+
+--- end week 3
+
+Load, save and display dramatic questions.
+
+Show abbreviations of special points.
+
+--- end week 4
+
+Make it somewhat pretty with css.
+
+Clean project folder and upload to github.
+
+----------------- End of month goal ------------------
