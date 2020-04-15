@@ -9,26 +9,40 @@
 <div id="main">foo</div>
 
 <div id=beatSheet>
-    
+
 </div>
 <button onclick="addFreshScene()">+ Scene</button>
+<button onclick="saveProject()">Save</button>
 
 <script src="./node_modules/sortablejs/Sortable.js"></script>
+
+
+<script src="./src/file_interactions.js"></script>
 
 <script type="text/javascript">
     /*
     This script allows adding beats and scenes to the scene based beatsheet document.
-    
+
     */
-		
-	function addBeat(list, text) {
+
+    var beatCount = 0;
+	function addFreshBeat(list)
+	{
+		addBeat(list, "beat"+beatCount, "");
+		beatCount++;
+	};
+
+	function addBeat(list, id, text) {
         var beatsList = document.getElementById(list);
         var newBeat = document.createElement("div");
+        newBeat.setAttribute("class", "beat");
+        newBeat.setAttribute("id", id);
         var newHandle = document.createElement("span");
         var handleText = document.createTextNode(":: ");
         newHandle.appendChild(handleText);
         var newTextSpan = document.createElement("span");
         newTextSpan.setAttribute("contenteditable", "true");
+        newTextSpan.setAttribute("class", "beatText");
         var beatText = document.createTextNode(text);
         newBeat.appendChild(newHandle);
         newBeat.appendChild(newTextSpan);
@@ -36,87 +50,46 @@
         beatsList.appendChild(newBeat);
         newTextSpan.focus();
     };
-    
-    
+
+
     function addFreshScene()
     {
         addScene("new scene "+sceneCount);
     }
-    
+
     var sceneCount = 0;
     function addScene(sceneTitle)
     {
         var beatSheetNode = document.getElementById("beatSheet");
         var newScene = document.createElement("div");
-        
+
         var title = document.createElement("h1");
         title.setAttribute("contenteditable", "true");
         var titleText = document.createTextNode(sceneTitle);
         title.appendChild(titleText);
         newScene.appendChild(title);
-        
+
         sceneCount+=1;
         var listID = "scene"+sceneCount;
         var beatList = document.createElement("div");
         beatList.setAttribute("class", "list half");
         beatList.setAttribute("id", listID);
         newScene.appendChild(beatList);
-        
+
         var newBeatButton = document.createElement("button");
-        newBeatButton.setAttribute("onclick", "addBeat('"+listID+"', '')");
+        newBeatButton.setAttribute("onclick", "addFreshBeat('"+listID+"')");
         var buttonText = document.createTextNode("+");
         newBeatButton.appendChild(buttonText);
         newScene.appendChild(newBeatButton);
-        
+
         beatSheetNode.appendChild(newScene);
-        
+
         new Sortable(document.getElementById(listID), { group: 'shared' });
-        
+
         return listID;
     }
-		
-		
-		
-</script>
-        
-<script type="text/javascript">
-    /*
-    This script deals with loading JSON files.
-    
-    */
-    
-    function readFile(file) {                                                       
-    var reader = new FileReader();
-    reader.onload = readSuccess;                                            
-    function readSuccess(evt) { 
-        var field = document.getElementById('main');
-        var text = evt.target.result;        
-   
-        // Clearing the old beats
-        var beatSheetNode = document.getElementById("beatSheet");
-        while (beatSheetNode.firstChild) {
-            beatSheetNode.removeChild(beatSheetNode.lastChild);
-        }
-        
-        // Adding beats from file
-        var obj = JSON.parse(text);
-        field.innerHTML = obj.name;
-        for(scene in obj.scenes)
-        {
-            var sceneID = addScene(obj.scenes[scene].title);
-            for(beat in obj.scenes[scene].beats)
-            {
-                addBeat(sceneID, obj.scenes[scene].beats[beat]);
-            }
-        }
-    };
-    reader.readAsText(file);                                              
-} 
 
-document.getElementById('fileinput').onchange = function(e) {
-    readFile(e.srcElement.files[0]);
-};
-    
+
 </script>
 
 </body>

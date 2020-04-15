@@ -1,6 +1,10 @@
 
 
 Save beats to json file.
+    - encode json
+        X encode beats
+        - encode scenes
+    - save to disk
 
 
 Load, save and display sequences from file.
