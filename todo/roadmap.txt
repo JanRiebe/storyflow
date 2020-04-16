@@ -1,13 +1,12 @@
 
 
-Save beats to json file.
-    - encode json
-        X encode beats
-        - encode scenes
-    - save to disk
+Save and load and display metadata on beats.
+    X display metadata next to the beat text
+    - characters present
+    - POV character
+    - allow flexibility for what metadata is there, so that it doesn't break if metadata isn't there.
+    - allow filtering view by metadata
 
-
-Load, save and display sequences from file.
 
 Stretch goal: Load file from google drive
 https://developers.google.com/drive/api/v3/quickstart/js
@@ -15,9 +14,9 @@ https://developers.google.com/drive/api/v3/manage-downloads#downloading_a_file
 
 --- end week 3
 
-Load, save and display dramatic questions.
+Load, save and display dramatic questions and setup payoff.
 
-Show abbreviations of special points.
+Load save and display structures.
 
 --- end week 4
 

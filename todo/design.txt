@@ -3,7 +3,7 @@ Multiple visualisations of beats.
     Scene headers by act/sequence. Scenes are like beats in the beat sheet by scene.
     Beats by story line.
     Dramatic question overview.
-    
+
 Toggle meta data on and off.
     left side
         Abbreviation for special points, like PP, MP, DSP. (Can be configured per project.)
@@ -11,7 +11,23 @@ Toggle meta data on and off.
     right side
         Open dramatic questions.
         Add/answer/remove dramatic question.
-        
+
+
+
+Conceptual thoughts about story structure elements
+    A beat is some change that happens, either in the world or the knowledge of the reader.
+        A beat could carry meta data, like what characters are present or what the POV is.
+    A scene is a collection of beats that happens in one place in one continuous time.
+    A sequence is a collection of beats that are told sequencially and have a shared topic.
+    A dramatic question is a collection of beats that are ordered but not sequencial. The first beat poses a question, the last answers it. All intermediate beats either promise the answer will happen soon or give an unsatisfying answer, which both makes the reader know the real answer even more.
+    Setup and Payoff is a collecion of beats, that are ordered but not sequencial. The first beat introduces a symbol or piece of knowledge. The subsequent ones are using it, each time loading more meaning onto the symbol. The last beat can use the symbol without adding to its meaning.
+    A structure is a collection of sequences and is a collection of requirements that are assigned to beats based on their position in the story and relation to other beats.
+        An example for a strucure is three act structure. Beats are grouped to acts (which are sequences) and given specific roles like Midpoint.
+        Another example is the hero's journey.
+
+
+
+
 
 Possible actions
     Add beat
@@ -34,8 +50,8 @@ Possible actions
         Edit which storyline a beat belongs to
     save a project
     load a project
-        
-        
+
+
 Saving and loading
     project file is one big json
     gets saved locally
@@ -43,8 +59,8 @@ Saving and loading
     user gets to decide where to save and load
     automatic saving on edit
     backup on opening project file
-        
-        
+
+
 Data structure
     beats
         text
@@ -69,6 +85,5 @@ Data structure
     dramatic question
         header
         list of beats with special roles, like midpoint
-        
+
     Everything is a node with id, text and children, where children can be named or unnamed.
-    

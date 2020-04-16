@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Storyflow</title>
 </head>
 <body>
 
 <input type="file" id="fileinput" />
-<div id="main">foo</div>
+<div id="projectTitle" contenteditable="true">project title</div>
 
 <div id=beatSheet>
 
@@ -28,25 +28,36 @@
     var beatCount = 0;
 	function addFreshBeat(list)
 	{
-		addBeat(list, "beat"+beatCount, "");
+		addBeat(list, "beat"+beatCount, "", ["foo", "bar"]);
 		beatCount++;
 	};
 
-	function addBeat(list, id, text) {
+	function addBeat(list, id, text, metadata_list) {
         var beatsList = document.getElementById(list);
         var newBeat = document.createElement("div");
         newBeat.setAttribute("class", "beat");
         newBeat.setAttribute("id", id);
-        var newHandle = document.createElement("span");
+
+		var newHandle = document.createElement("span");
         var handleText = document.createTextNode(":: ");
         newHandle.appendChild(handleText);
+        newBeat.appendChild(newHandle);
+
         var newTextSpan = document.createElement("span");
         newTextSpan.setAttribute("contenteditable", "true");
         newTextSpan.setAttribute("class", "beatText");
-        var beatText = document.createTextNode(text);
-        newBeat.appendChild(newHandle);
+		newTextSpan.innerHTML = text;
         newBeat.appendChild(newTextSpan);
-        newTextSpan.appendChild(beatText);
+
+		for(i in metadata_list)
+		{
+		    var newMetaDataSpan = document.createElement("span");
+		    newMetaDataSpan.setAttribute("contenteditable", "true");
+		    newMetaDataSpan.setAttribute("class", "metaData");
+			newMetaDataSpan.innerHTML = metadata_list[i];
+	        newBeat.appendChild(newMetaDataSpan);
+		}
+
         beatsList.appendChild(newBeat);
         newTextSpan.focus();
     };
@@ -64,9 +75,9 @@
         var newScene = document.createElement("div");
 
         var title = document.createElement("h1");
+        title.setAttribute("class", "sceneTitle");
         title.setAttribute("contenteditable", "true");
-        var titleText = document.createTextNode(sceneTitle);
-        title.appendChild(titleText);
+		title.innerHTML = sceneTitle;
         newScene.appendChild(title);
 
         sceneCount+=1;

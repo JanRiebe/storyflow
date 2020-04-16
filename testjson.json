@@ -1,6 +1,6 @@
 {
 "name": "The language of birds",
-"beats": 
+"beats":
     {
         "id1":"foo",
         "id2":"bar",
@@ -8,15 +8,20 @@
         "id4":"kapeng"
     },
 "scenes":
+    {
+        "scene 1":{"description": "Some short description", "beats":["id1", "id3"]},
+        "scene 2":{"description": "Some short description", "beats":["id1", "id3"]}
+    }
+"sequences":
     [
         {
-            "title":"scene 1",
-            "beats":["id1", "id3"]
+            "description":"short description",
+            "scenes":["scene1", "scene3"]
         },
         {
-            "title":"scene foo",
-            "beats":["id4", "id2"]
+            "description":"short description",
+            "scenes":["scene4", "scene2"]
         }
-        
+
     ]
 }
