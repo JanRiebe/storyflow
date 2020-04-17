@@ -8,6 +8,8 @@
 <input type="file" id="fileinput" />
 <div id="projectTitle" contenteditable="true">project title</div>
 
+<input id="filter" placeholder="filter" />
+
 <div id=beatSheet>
 
 </div>
@@ -100,6 +102,27 @@
         return listID;
     }
 
+	function filterByMetaData(filter)
+	{
+		var beats = document.getElementsByClassName("beat");
+		for(var b=0; b < beats.length;b++)
+		{
+			var metaData = beats[b].getElementsByClassName("metaData");
+			for(var m=0; m < metaData.length;m++)
+			{
+				var text = metaData[m].innerHTML;
+				if (text===filter || filter.length==0) {
+					beats[b].style.display = "block";
+					break;
+				} else {
+					beats[b].style.display = "none";
+				}
+			}
+		}
+	}
+	document.getElementById('filter').oninput = function(e) {
+	    filterByMetaData(e.target.value);
+	};
 
 </script>
 

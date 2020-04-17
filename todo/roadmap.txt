@@ -2,10 +2,9 @@
 
 Save and load and display metadata on beats.
     X display metadata next to the beat text
-    - characters present
-    - POV character
-    - allow flexibility for what metadata is there, so that it doesn't break if metadata isn't there.
-    - allow filtering view by metadata
+    X allow filtering view by metadata
+    - load metaData
+    - save metaData
 
 
 Stretch goal: Load file from google drive
