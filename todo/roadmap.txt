@@ -1,26 +1,69 @@
 
-
-Save and load and display metadata on beats.
-    X display metadata next to the beat text
-    X allow filtering view by metadata
-    - load metaData
-    - save metaData
-
-
-Stretch goal: Load file from google drive
-https://developers.google.com/drive/api/v3/quickstart/js
-https://developers.google.com/drive/api/v3/manage-downloads#downloading_a_file
-
---- end week 3
-
-Load, save and display dramatic questions and setup payoff.
-
-Load save and display structures.
-
---- end week 4
-
 Make it somewhat pretty with css.
+    X Pretty buttons
+    X Pretty header
+    X beats and scenes in the middle
+    X pretty new scene header
+    X pretty beat text
+        X font
+        - handle
+        X border
+
+Fix saving and loading
+
+When clicking on beat card, place cursor in beat.
 
 Clean project folder and upload to github.
 
 ----------------- End of month goal ------------------
+
+
+
+Future:
+
+Load file from google drive
+https://developers.google.com/drive/api/v3/quickstart/js
+https://developers.google.com/drive/api/v3/manage-downloads#downloading_a_file
+
+- think about making scenes and sequences nested lists like in here http://sortablejs.github.io/Sortable/
+- think about adding multidrag
+
+Load save and display structures.
+
+
+
+Load, save and display dramatic questions and setup payoff.
+    X research how to draw connections
+    X think about design
+        : table view (do this now)
+            * no need for scenes
+            * still draggable
+            * questions as headers
+            * beats as rows
+            * questions ordered horizontally automatically by first beat they are in
+            * cells contain text describing roll of beat in this question
+            * lines connect the cells of questions that have text
+        : arc view (stretch goal)
+            * no needs for scenes
+            * beats draggable
+            * beats in one row
+            * questions and answers displayed as arcs
+            * only single question answer pairs
+    X test whether I can drag rows in a table
+        * seems like that won't work
+        * grid demo is also not what I want
+    X see whether I can create my own table by styling defined cell widths and using divs as rows and spans as columns
+    X update connections when reordering beats
+    - add questions
+        X add header
+        X add column
+        X update width of cells when header width changes
+    X encode to json
+    X decode from json
+    - display loaded file
+        - when adding question set answer texts from beat dict
+        - call the right function on load
+    - update connections when editing question text
+        X assign question attributes
+        - redraw the connections
+    - update horizontal order when editing question text

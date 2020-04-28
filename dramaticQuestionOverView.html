@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Storyflow</title>
+	<style>
+
+	  connection {
+	    border: 24px solid #b51c29;
+	    border-radius: 31px;
+	  }
+
+	  	.handle {
+			background-color: green;
+		    width: 200px;
+		}
+	  	#myTable {
+			overflow: scroll;
+			display: table;
+		}
+		.header {
+			background-color: coral;
+			display: table-row;
+			height: auto;
+		}
+		.row {
+		    height: auto;
+		    display: table-row;
+		}		
+		.headerCell {
+		    width: 200px;
+		    display: table-cell;
+			vertical-align: text-top;
+		    padding: 10px;
+		    margin: 12px;
+			border-width: 1px 2px;
+			border-style: solid;
+			border-color: lightgray;
+			/*word-break: break-all;*/
+		}
+		.cell {
+		    width: 200px;
+		    display: table-cell;
+			vertical-align: text-top;
+		    padding: 10px;
+		    margin: 12px;
+			border-width: 1px 2px;
+			border-style: solid;
+			border-color: lightgray;
+			/*word-break: break-all;*/
+		}
+	</style>
+</head>
+<body>
+
+
+<input type="file" id="fileinput" />
+<div id="projectTitle" contenteditable="true">project title</div>
+	
+
+<div id="myTable">
+	<div id="rows">
+		<div class="header" id="questions">
+				<span >  </span>
+			<span class="headerCell" contenteditable="true" onblur="addDramaticQuestion(this)"></span>
+		</div>
+		<div class="row">
+			<span class="handle">::</span>
+			<span class="cell" contenteditable="true" onblur="updateDramaticAnswer(this, 0)" question='q0'></span>
+			
+		</div>
+		<div class="row">
+				<span class="handle">::</span>
+				<span class="cell" contenteditable="true" onblur="updateDramaticAnswer(this, 0)"></span>
+		</div>
+		<div class="row">
+				<span class="handle">::</span>
+				<span class="cell" contenteditable="true" onblur="updateDramaticAnswer(this, 0)" question='q0'></span>
+		</div>
+
+	</div>
+</div>
+
+<button onclick="updateConnections()">update connections</button>
+
+
+<script src="./node_modules/sortablejs/Sortable.js"></script>
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="lib/jquery-connections/jquery.connections.js"></script>
+
+
+<script>
+
+	$(document).ready(function() {
+		$(".cell[question='q0']").connections();
+	});
+
+	function updateQuestionLines(){
+	}
+
+	var rows = document.getElementById('rows')
+	new Sortable(rows, {
+		animation: 150, 
+		filter: '.header', 
+		handle: '.handle',
+		onEnd: function (/**Event*/evt) {
+			updateQuestionLines();
+			var itemEl = evt.item;  // dragged HTMLElement
+			evt.to;    // target list
+			evt.from;  // previous list
+			evt.oldIndex;  // element's old index within old parent
+			evt.newIndex;  // element's new index within new parent
+			evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
+			evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
+			evt.clone // the clone element
+			evt.pullMode;  // when item is in another sortable: `"clone"` if cloning, `true` if moving
+			console.log(evt.item);
+		}
+	 });
+
+
+</script>
+
+<script src="./src/file_interactions.js"></script>
+
+
+<script>
+
+	var numberOfQuestions = 1;
+	function addDramaticQuestion(lastQuestion)
+	{
+
+		if(lastQuestion.innerHTML==="")
+			return;
+
+		lastQuestion.removeAttribute("onblur");
+
+		// Adding cell to header
+		var headerNode = document.getElementById("questions");
+		var newQuestion = document.createElement("span");
+		newQuestion.setAttribute("contenteditable", "true");
+		newQuestion.setAttribute("onblur", "addDramaticQuestion(this)");
+		newQuestion.setAttribute("class", "headerCell");
+		newQuestion.setAttribute("question", "q"+numberOfQuestions);
+		newQuestion.innerHTML = ""
+		headerNode.appendChild(newQuestion);
+
+		// Adding cells to rows
+		var rows = document.getElementsByClassName("row");
+		for(var i =0;i<rows.length;i++)
+		{
+			var newCell = document.createElement("span");
+			newCell.setAttribute("contenteditable", "true");
+			newCell.setAttribute("class", "cell");
+			newCell.setAttribute("onblur", "updateDramaticAnswer(this,"+numberOfQuestions+")");
+			newCell.innerHTML = ""
+			rows[i].appendChild(newCell);
+
+			// Initialising connection display
+			$(".cell[question='q"+i+"']").connections();
+		}
+
+		numberOfQuestions++;
+	}
+
+	function updateDramaticAnswer(cell, questionIndex)
+	{
+		console.log("update dramatic answer");
+		if(cell.innerHTML==="")
+			cell.removeAttribute("question");
+		else
+			cell.setAttribute("question", "q"+questionIndex);
+
+		console.log(cell.attributes);
+		console.log(cell);
+		// FIXME at this point the attribute isn't yet in the html document?
+		$(".cell[question='q"+questionIndex+"']").connections('update');
+	}
+
+
+	function updateConnections()
+	{
+		for(var i =0;i<numberOfQuestions.length;i++)
+		{			
+			$(".cell[question='q"+i+"']").connections('update');
+		}
+	}
+</script>
+
+
+</body>
+</html>

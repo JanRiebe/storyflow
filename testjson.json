@@ -1,18 +1,18 @@
 {
-"name": "The language of birds",
-"beats":
+    "name": "The language of birds",
+    "beats":
     {
         "id1":"foo",
         "id2":"bar",
         "id3":"arg",
         "id4":"kapeng"
     },
-"scenes":
+    "scenes":
     {
         "scene 1":{"description": "Some short description", "beats":["id1", "id3"]},
         "scene 2":{"description": "Some short description", "beats":["id1", "id3"]}
-    }
-"sequences":
+    },
+    "sequences":
     [
         {
             "description":"short description",
@@ -23,5 +23,9 @@
             "scenes":["scene4", "scene2"]
         }
 
-    ]
+    ],
+    "questions":
+    {
+        "q0":{"text":"Is this a question?", "beats":[{"id":"id1", "text":"foo"}]}
+    }
 }

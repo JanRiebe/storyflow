@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Storyflow</title>
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+</head>
+<body>
+<input type="file" id="fileinput" />
+<div id="projectTitle" contenteditable="true">project title</div>
+
+<input id="filter" placeholder="filter" />
+
+<div id=beatSheet>
+
+</div>
+<button onclick="addFreshScene()">+ Scene</button>
+<button onclick="saveProject()">Save</button>
+
+
+<script src="./node_modules/sortablejs/Sortable.js"></script>
+
+<script src="./src/file_interactions.js"></script>
+<script src="./src/sceneViewInteractions.js"></script>
+
+
+</body>
+</html>

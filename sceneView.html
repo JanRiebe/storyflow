@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Storyflow</title>
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap" rel="stylesheet"> 
+</head>
+<body>
+
+<div class="topnav">
+        <label class="fileContainer">
+                <button class="headerColumn" id="loadButton" onclick="loadClicked()"><span class="material-icons">folder_open</span></button>
+                <input class="headerColumn" type="file" id="fileinput" style="display: none"/>
+            </label>
+    <h1 class="headerColumn" id="projectTitle" contenteditable="true">project title</h1>
+    <button class="headerColumn" id="save" onclick="saveProject()"><span class="material-icons">save</span></button>
+</div>
+
+
+<div id=beatSheet>
+
+</div>
+<button id="addSceneButton" onclick="addFreshScene()"><span class="material-icons">post_add</span></button>
+
+
+<script src="./node_modules/sortablejs/Sortable.js"></script>
+
+<script src="./src/file_interactions.js"></script>
+<script src="./src/sceneViewInteractions.js"></script>
+
+
+</body>
+</html>
