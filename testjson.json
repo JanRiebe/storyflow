@@ -8,21 +8,9 @@
         "id4":"kapeng"
     },
     "scenes":
-    {
-        "scene 1":{"description": "Some short description", "beats":["id1", "id3"]},
-        "scene 2":{"description": "Some short description", "beats":["id1", "id3"]}
-    },
-    "sequences":
     [
-        {
-            "description":"short description",
-            "scenes":["scene1", "scene3"]
-        },
-        {
-            "description":"short description",
-            "scenes":["scene4", "scene2"]
-        }
-
+        {"description": "Some short description", "beats":["id1", "id3"]},
+        {"description": "Some short description", "beats":["id1", "id3"]}
     ],
     "questions":
     {

@@ -12,19 +12,21 @@ Entry points
 
 function saveProject()
 {
-    //TODO project object separatly
-    var beatsObj =  {};//encodeScenesWithBeats();
-    //TODO scenes object separately
+    var project = encodeProject();
+    var beatsObj =  encodeBeats();
+    var scenesObj = encodeScenes();
     var questionsObj = {} // encodeDramaticQuestions();
-    var combinedObj = {"beats": beatsObj, "questions": questionsObj}
-	var jsonData = encodeObjectToJson(combinedObj);
-	download(jsonData, "testsave.story", 'text/plain');
+    var combinedObj = {"project": project, "beats": beatsObj, "scenes":scenesObj, "questions": questionsObj}
+    var jsonData = encodeObjectToJson(combinedObj);
+	download(jsonData, project.name+".story", 'text/plain');
 }
 
 
 document.getElementById('fileinput').onchange = function(e) {
     readFile(e.srcElement.files[0]);
 };
+
+
 
 
 function loadClicked()
@@ -75,10 +77,10 @@ function displayScenesWithBeats(jsonString)
 	// Adding beats from file
 	var obj = JSON.parse(jsonString);
     var projectTitle = document.getElementById('projectTitle');
-	projectTitle.innerHTML = obj.name;
+	projectTitle.innerHTML = obj.project.name;
 	for(scene in obj.scenes)
 	{
-		var sceneID = addScene(obj.scenes[scene].title);
+		var sceneID = addScene(obj.scenes[scene].description);
 		for(beat in obj.scenes[scene].beats)
 		{
             var beatID = obj.scenes[scene].beats[beat];
@@ -89,6 +91,54 @@ function displayScenesWithBeats(jsonString)
 }
 
 
+function encodeProject()
+{
+    var obj = {};
+    var projectTitle = document.getElementById('projectTitle');
+    obj.name = projectTitle.innerText;
+    return obj;
+}
+
+
+function encodeBeats()
+{
+    var beatsObject = {};    
+    var beatNodes = document.getElementsByClassName("beat");
+    for(var i = 0; i < beatNodes.length; i++)
+    {
+        var beatID = beatNodes[i].getAttribute("id");
+        var beatText = beatNodes[i].getElementsByClassName("beatText")[0].innerHTML;
+        beatsObject[beatID] = beatText;
+    }
+    
+    return beatsObject;
+}
+
+
+function encodeScenes()
+{
+    var beatSheetNode = document.getElementById("beatSheet");
+    var scenesObject = []
+    
+    var sceneNodes = beatSheetNode.children;
+	for(var i = 0; i < sceneNodes.length; i++)
+    {
+        var sceneTitle = sceneNodes[i].getElementsByClassName("sceneTitle")[0].innerHTML;
+        var sceneBeatNodes = sceneNodes[i].getElementsByClassName("beat");
+		var sceneBeats = [];
+		for(var b = 0; b < sceneBeatNodes.length; b++)
+	    {
+	        var beatID = sceneBeatNodes[b].getAttribute("id");
+			sceneBeats[b] = beatID;
+	    }
+        scenesObject[i] = {"description": sceneTitle, "beats": sceneBeats};
+    }
+    
+    return scenesObject;
+}
+
+
+/*
 function encodeScenesWithBeats()
 {
     var beatSheetNode = document.getElementById("beatSheet");
@@ -120,6 +170,7 @@ function encodeScenesWithBeats()
     
     return obj;
 }
+*/
 
 function encodeDramaticQuestions()
 {

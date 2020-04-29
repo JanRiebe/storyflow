@@ -3,6 +3,10 @@ This script allows adding beats and scenes to the scene based beatsheet document
 
 */
 
+function onBeatClicked(beat) {
+    beat.getElementsByClassName("beatText")[0].focus();
+    //yourContentEditableElement.focus();
+};
 
 var beatCount = 0;
 function addFreshBeat(list)
@@ -15,12 +19,14 @@ function addBeat(list, id, text, metadata_list) {
     var beatsList = document.getElementById(list);
     var newBeat = document.createElement("div");
     newBeat.setAttribute("class", "beat");
+    newBeat.setAttribute("onclick", "onBeatClicked(this)");
     newBeat.setAttribute("id", id);
 
     var newHandle = document.createElement("span");
     newHandle.setAttribute("class", "handle");
-    var handleText = document.createTextNode("::::: ");    //TODO give better icon
-    newHandle.appendChild(handleText);
+    //var handleText = document.createTextNode("::::: ");    //TODO give better icon
+    //newHandle.appendChild(handleText);
+    newHandle.innerHTML = '<span class="material-icons">drag_indicator</span>';
     newBeat.appendChild(newHandle);
 
     var newTextSpan = document.createElement("span");
@@ -45,7 +51,7 @@ function addBeat(list, id, text, metadata_list) {
 
 function addFreshScene()
 {
-    addScene("new scene "+sceneCount);
+    addScene("unnamed scene");
 }
 
 var sceneCount = 0;
@@ -58,7 +64,7 @@ function addScene(sceneTitle)
     var title = document.createElement("h1");
     title.setAttribute("class", "sceneTitle");
     title.setAttribute("contenteditable", "true");
-    title.innerHTML = "unnamed scene";//sceneTitle;
+    title.innerHTML = sceneTitle;
     newScene.appendChild(title);
 
     sceneCount+=1;
@@ -71,14 +77,15 @@ function addScene(sceneTitle)
     var newBeatButton = document.createElement("button");
     newBeatButton.setAttribute("class", "addBeatButton");
     newBeatButton.setAttribute("onclick", "addFreshBeat('"+listID+"')");
-    //var buttonText = document.createTextNode("+");
-    //newBeatButton.appendChild(buttonText);
     newBeatButton.innerHTML = '<span class="material-icons">add_box</span>';
     newScene.appendChild(newBeatButton);
 
     beatSheetNode.appendChild(newScene);
 
-    new Sortable(document.getElementById(listID), { group: 'shared' });
+    new Sortable(document.getElementById(listID), { 
+        group: 'shared', 
+        animation: 150
+      });
 
     return listID;
 }

@@ -1,17 +1,17 @@
 
-Make it somewhat pretty with css.
+X Make it somewhat pretty with css.
     X Pretty buttons
     X Pretty header
     X beats and scenes in the middle
     X pretty new scene header
     X pretty beat text
         X font
-        - handle
+        X handle
         X border
 
-Fix saving and loading
+X Fix saving and loading
 
-When clicking on beat card, place cursor in beat.
+X When clicking on beat card, place cursor in beat. 
 
 Clean project folder and upload to github.
 
