@@ -1,0 +1,244 @@
+<style type="text/css">
+  body{
+      /*overflow:hidden;*/
+      background-color: linen;
+  }
+  #iframe{display:none;}
+  /*#div{position:absolute;top:0px;left:0px;width:100%;height:10000px;}*/
+  #saveButton{z-index:2;position:absolute;top:10px;right:20px;}
+    .character {
+        text-align: center;
+        color: red;
+        margin-top: 10px;
+    }    
+    .dialog{
+        width: 20em;
+        word-wrap: break-word;
+        margin-left: 400px;
+        margin-right: 300px;
+        text-align: left;
+        color: green;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .text{
+        width: 50em;
+        word-wrap: break-word;
+        margin-left: 110px;
+        margin-right: 110px;
+        text-align: left;
+        color: blue;
+    }
+    #page{
+        background-color: white;
+        margin-left: 100px;
+        margin-right: 100px;
+        font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace;/* font-size: 12px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 12px;*/
+    }
+</style>
+<script>
+
+    var lines = [];
+
+function save(){
+    var out = "";
+    for(const lineName of lines)
+    {
+      var note = document.getElementById(lineName).innerHTML;
+      note = note.replace(/(<div><br>)*<\/div>/g, '\n');
+      note = note.replace(/<div>/g, '');
+      note = note.replace(/<br>/g, '');
+      /* replaces some html entities */
+      note = note.replace(/&nbsp;/g, ' ');
+      note = note.replace(/&amp;/g, '&');
+      note = note.replace(/&lt;/g, '<');
+      note = note.replace(/&gt;/g, '>');
+      out += "\n"+note;
+    }
+    //alert(document.getElementById('title').innerText)
+    document.getElementById('saveButton').setAttribute(
+        'download',
+        document.getElementById('title').innerText+'.txt'
+    );
+    document.getElementById('saveButton').setAttribute(
+      'href',
+      'data:Content-type: text/plain, ' + escape(out)
+    );
+    saveButton.click();
+
+}
+
+
+
+function isUpperCase(str) {
+    return str === str.toUpperCase();
+}
+
+
+
+function setElementStyle(oldElement)
+{
+    //var twoElementsUp = document.getElementById(lines[lines.length - 2]);
+    oldElement.align = (isUpperCase(oldElement.innerText)) ? 'center' : 'left';
+    if(isUpperCase(oldElement.innerText))
+        oldElement.className = 'character';
+    else if(isUpperCase(document.getElementById(lines[lines.length - 3]).innerText))
+        oldElement.className = 'dialog'
+    else
+        oldElement.className = 'text'
+    if(oldElement.innerHTML.length == 0)
+        oldElement.innerHTML = "<br>";
+}
+
+
+function setElementStyleOnBlur(e)
+{
+    setElementStyle(e.target);
+}
+
+
+function add_div(text="")
+{
+    var newElement = document.createElement('div');
+    newElement.id = "line "+(lines.length);
+    lines[lines.length] = newElement.id;
+    newElement.className = "text";
+    newElement.contentEditable = true;
+    newElement.onblur = setElementStyleOnBlur;
+    
+    //setElementStyle(newElement);
+    //TODO insert at the position below the active element instead of at the bottom.
+    document.getElementById("page").appendChild(newElement);
+    
+    // Deactivating linebreaks within the element.
+    newElement.addEventListener('keypress', (evt) => {
+        if (evt.which === 13) {
+            evt.preventDefault();
+        }
+    });
+    
+    if(text != "")
+    {
+        newElement.innerText = text;
+        setElementStyle(newElement);
+        focusEndOfElement(newElement);
+    }
+    else
+        newElement.focus();
+}
+
+
+function focusEndOfElement(div)
+{
+    div.focus();
+    var range = document.createRange();
+    var sel = window.getSelection();
+    range.setStart(div, 1);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
+/*
+Removes an empty div element from the page.
+*/
+function removeDivIfEmpty(div)
+{
+    if(div.innerHTML == "<br>" || div.innerText.length == 0)
+    {
+        document.getElementById("page").removeChild(div);
+
+        for(const i in lines)
+        {
+            if(lines[i] == div.id)
+                {
+                    // Removing div from lines array.
+                    lines.splice(i,1);
+                    // Focussing on element before div.
+                    focusEndOfElement(document.getElementById(lines[i-1]));
+                    break;
+                }
+        }
+    }
+}
+
+function keydownHandler(e) {
+    if (e.ctrlKey && e.keyCode == 83) {
+      // Ctrl + s pressed
+      save();
+    }
+    else if (e.keyCode == 13 )
+    {
+        // Enter pressed
+      add_div();
+    }
+    else if (e.keyCode == 8 )
+    {
+        // Backspace pressed
+        if(document.activeElement.parentNode.id==="page")
+            removeDivIfEmpty(document.activeElement);
+        else
+            alert("No element selected.");
+    }
+    else if(e.keyCode == 37)
+    {
+        // Left arrow
+    }
+    else if(e.keyCode == 38)
+    {
+        // Up arrow
+    }
+    else if(e.keyCode == 39)
+    {
+        // Right arrow
+    }
+    else if(e.keyCode == 40)
+    {
+        // Down arrow
+    }
+  return true;
+}
+
+function displayFile(evt)
+{
+
+    //Retrieve the first (and only!) File from the FileList object
+    var f = evt.target.files[0]; 
+    
+    if (f) {
+        var r = new FileReader();
+        r.onload = function(e) { 
+        
+            var contents = e.target.result;
+            var file_lines = contents.split('\n');
+            for(var i = 0; i < file_lines.length; i++){
+                if(i != "")
+                    add_div(file_lines[i]);
+            //alert(lines[line]);
+            }
+        
+        }        
+        r.readAsText(f);
+    }
+    else { 
+        alert("Failed to load file");
+    }
+}
+
+window.onload = function(){
+ document.getElementById('fileinput').addEventListener('change', displayFile, false);
+};
+
+//Register the keydown event handler:
+document.onkeydown=keydownHandler;
+
+
+</script>
+
+<input type="file" id="fileinput" />
+<a id="saveButton" target="iframe" download="note.txt" href="#" onclick="save();">Save</a>
+<iframe id="iframe"></iframe>
+<div contenteditable id="title">Unnamed document</div>
+<br>
+<div id="page" className="paper"><br><br><br></div>
+</html>
